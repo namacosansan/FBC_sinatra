@@ -1,0 +1,16 @@
+
+<div>
+  <label>タイトル：</label><br>
+  <p><%= h(@title) %></p>
+  <label>内容：</label><br>
+  <p><%= h(@content) %></p>
+</div>
+
+<div class="buttons">
+  <a href="/memos/<%= @id %>/edit"><button>変更</button></a>
+
+  <form action="/memos/<%= @id %>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit">削除</button>
+  </form>
+</div>
