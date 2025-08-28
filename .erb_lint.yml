@@ -1,0 +1,7 @@
+linters:
+  RuboCop:
+    enabled: true
+
+exclude:
+  - 'vendor/**/*'
+  - 'memos.csv'
