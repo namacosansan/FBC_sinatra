@@ -5,6 +5,10 @@ source "https://rubygems.org"
 # gem "rails"
 gem "sinatra", "~> 4.1"
 gem 'sinatra-contrib'
+gem "rackup"
+gem "puma"
+gem "csv"
+
 
 
 group :development do

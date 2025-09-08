@@ -21,7 +21,7 @@ cd FBC_sinatra
 bundle install
 
 # サーバーを起動
-ruby main.rb
+bundle exec ruby main.rb
 
 # ブラウザでアクセス
 http://localhost:4567
