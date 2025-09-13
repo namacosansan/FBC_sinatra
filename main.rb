@@ -11,44 +11,38 @@ helpers do
   end
 end
 
-# メモを保存するファイル
 MEMO_FILE = 'memos.csv'
 
-# メモを読み込む
 def load_memos
   return [] unless File.exist?(MEMO_FILE)
 
   memos = []
   CSV.foreach(MEMO_FILE, headers: true) do |row|
-    memos << { 'title' => row['title'], 'content' => row['content'] }
+    memos << row.to_hash
   end
   memos
 end
 
-# メモを保存する
 def save_memos(memos)
   CSV.open(MEMO_FILE, 'w') do |csv|
-    csv << %w[title content] # ヘッダー
+    csv << %w[title content]
     memos.each do |memo|
       csv << [memo['title'], memo['content']]
     end
   end
 end
 
-# Top画面
 get '/' do
-  @memos = load_memos # メモの一覧表示
+  @memos = load_memos
   erb :top
 end
 
-# new_memo 入力画面
 get '/new_memo' do
   erb :new_memo
 end
 
-# save_memo　メモの登録
 post '/save_memo' do
-  title = params[:title]&.strip # 空白の削除
+  title = params[:title]&.strip
   params[:content]
 
   if title.nil? || title.empty?
@@ -66,7 +60,6 @@ post '/save_memo' do
   redirect '/'
 end
 
-# show_memo　メモを表示する
 get '/memos/:id' do
   memos = load_memos
   index = params[:id].to_i
@@ -78,7 +71,6 @@ get '/memos/:id' do
   erb :show_memo
 end
 
-# deleteボタン
 delete '/memos/:id' do
   memos = load_memos
   index = params[:id].to_i
@@ -86,8 +78,7 @@ delete '/memos/:id' do
   save_memos(memos)
   redirect '/'
 end
-
-# edit_memo
+ 
 get '/memos/:id/edit' do
   memos = load_memos
   index = params[:id].to_i
@@ -114,6 +105,5 @@ patch '/memos/:id' do
   memos[index]['title'] = title
   memos[index]['content'] = content
   save_memos(memos)
-  # トップページに戻す
   redirect '/'
 end
