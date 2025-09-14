@@ -9,6 +9,14 @@ helpers do
   def h(text)
     CGI.escapeHTML(text.to_s)
   end
+
+  def ensure_title(title)
+    return unless title.nil? || title.strip.empty?
+
+    status 400
+    @message = 'タイトルは必須です。'
+    halt erb(:error)
+  end
 end
 
 MEMO_FILE = 'memos.csv'
@@ -45,11 +53,7 @@ post '/memos' do
   title = params[:title]&.strip
   params[:content]
 
-  if title.nil? || title.empty?
-    status 400
-    @message = 'タイトルは必須です。'
-    return erb :error
-  end
+  ensure_title(title)
 
   memos = load_memos
   memos << {
@@ -95,11 +99,7 @@ patch '/memos/:id' do
   title = params[:title]
   content = params[:content]
 
-  if title.nil? || title.empty?
-    status 400
-    @message = 'タイトルは必須です。'
-    return erb :error
-  end
+  ensure_title(title)
 
   memos = load_memos
   memos[index]['title'] = title
