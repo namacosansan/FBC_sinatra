@@ -32,16 +32,16 @@ def save_memos(memos)
   end
 end
 
-get '/' do
+get '/memos' do
   @memos = load_memos
   erb :top
 end
 
-get '/new_memo' do
-  erb :new_memo
+get '/memo_new' do
+  erb :memo_new
 end
 
-post '/save_memo' do
+post '/memos' do
   title = params[:title]&.strip
   params[:content]
 
@@ -57,7 +57,7 @@ post '/save_memo' do
     'content' => params[:content]
   }
   save_memos(memos)
-  redirect '/'
+  redirect '/memos'
 end
 
 get '/memos/:id' do
@@ -68,7 +68,7 @@ get '/memos/:id' do
   @id = index
   @title = memo['title']
   @content = memo['content']
-  erb :show_memo
+  erb :memos
 end
 
 delete '/memos/:id' do
@@ -76,9 +76,9 @@ delete '/memos/:id' do
   index = params[:id].to_i
   memos.delete_at(index)
   save_memos(memos)
-  redirect '/'
+  redirect '/memos'
 end
- 
+
 get '/memos/:id/edit' do
   memos = load_memos
   index = params[:id].to_i
@@ -87,12 +87,12 @@ get '/memos/:id/edit' do
   @id = index
   @title = memo['title']
   @content = memo['content']
-  erb :edit_memo
+  erb :memo_edit
 end
 
 patch '/memos/:id' do
   index = params[:id].to_i
-  title = params[:title]&.strip
+  title = params[:title]
   content = params[:content]
 
   if title.nil? || title.empty?
@@ -105,5 +105,5 @@ patch '/memos/:id' do
   memos[index]['title'] = title
   memos[index]['content'] = content
   save_memos(memos)
-  redirect '/'
+  redirect '/memos'
 end
