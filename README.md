@@ -24,4 +24,4 @@ bundle install
 bundle exec ruby main.rb
 
 # ブラウザでアクセス
-http://localhost:4567
+http://localhost:4567/memos
