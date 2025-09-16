@@ -5,6 +5,8 @@ require 'sinatra/reloader'
 require 'csv'
 require 'cgi'
 
+set :method_override, true
+
 helpers do
   def h(text)
     CGI.escapeHTML(text.to_s)
