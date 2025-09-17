@@ -12,7 +12,7 @@ helpers do
     CGI.escapeHTML(text.to_s)
   end
 
-  def ensure_title(title)
+  def ensure_title_presence(title)
     return unless title.nil? || title.strip.empty?
 
     status 400
@@ -47,7 +47,7 @@ get '/memos' do
   erb :top
 end
 
-get '/memo_new' do
+get '/memos/new' do
   erb :memo_new
 end
 
@@ -55,7 +55,7 @@ post '/memos' do
   title = params[:title]&.strip
   params[:content]
 
-  ensure_title(title)
+  ensure_title_presence(title)
 
   memos = load_memos
   memos << {
@@ -101,7 +101,7 @@ patch '/memos/:id' do
   title = params[:title]
   content = params[:content]
 
-  ensure_title(title)
+  ensure_title_presence(title)
 
   memos = load_memos
   memos[index]['title'] = title
