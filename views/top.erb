@@ -1,0 +1,10 @@
+<ul>
+  <% @memos.each_with_index do |memo, index| %>
+    <li>
+      <a href="/memos/<%= index %>">
+        <strong><%= h(memo["title"]) %></strong>
+      </a>
+    </li>
+  <% end %>
+</ul>
+<a href="/memos/new"><button>追加</button></a>

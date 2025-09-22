@@ -1,0 +1,10 @@
+<form action="/memos/<%= @id %>" method="post">
+  <input type="hidden" name="_method" value="patch">
+  <label>タイトル：</label><br>
+  <input id="title" type="text" name="title" value="<%= h(@title) %>" autocomplete="off"><br><br>
+
+  <label>内容：</label><br>
+  <textarea name="content" rows="5" cols="40"><%= h(@content) %></textarea><br><br>
+
+  <button type="submit">変更</button>
+</form>
